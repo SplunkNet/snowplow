@@ -11,6 +11,7 @@
         <element label="Version" max_length="32" name="version" reference="x_snowplow_version" type="reference"/>
         <index name="index">
             <element name="type"/>
+            <element name="version"/>
         </index>
         <index name="index2">
             <element name="version"/>

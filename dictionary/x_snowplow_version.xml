@@ -5,6 +5,7 @@
         <element display="true" label="Version" mandatory="true" max_length="40" name="version" type="string"/>
         <index name="index">
             <element name="module"/>
+            <element name="version"/>
         </index>
     </element>
 </database>

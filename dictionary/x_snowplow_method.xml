@@ -5,6 +5,7 @@
         <element label="Type" mandatory="true" max_length="32" name="type" reference="x_snowplow_type" type="reference"/>
         <index name="index">
             <element name="type"/>
+            <element name="name"/>
         </index>
     </element>
 </database>

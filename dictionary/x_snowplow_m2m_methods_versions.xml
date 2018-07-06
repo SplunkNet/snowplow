@@ -11,6 +11,7 @@
         </element>
         <index name="index">
             <element name="method"/>
+            <element name="version"/>
         </index>
         <index name="index2">
             <element name="version"/>

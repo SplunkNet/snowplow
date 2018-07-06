@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update>
+    <sys_documentation element="" label="Module" language="en" table="x_snowplow_module">
+        <sys_documentation action="INSERT_OR_UPDATE">
+            <element/>
+            <help/>
+            <hint/>
+            <label>Module</label>
+            <language>en</language>
+            <name>x_snowplow_module</name>
+            <plural>Modules</plural>
+            <sys_class_name>sys_documentation</sys_class_name>
+            <sys_created_by>vincent.seguin</sys_created_by>
+            <sys_created_on>2018-07-06 22:44:35</sys_created_on>
+            <sys_id>cd49fe8bdb031300f91d6583ca961948</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>Module</sys_name>
+            <sys_package display_value="snowplow" source="x_snowplow">afa47a0bdb031300f91d6583ca9619aa</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="snowplow">afa47a0bdb031300f91d6583ca9619aa</sys_scope>
+            <sys_update_name>sys_documentation_x_snowplow_module__en</sys_update_name>
+            <sys_updated_by>vincent.seguin</sys_updated_by>
+            <sys_updated_on>2018-07-06 22:44:35</sys_updated_on>
+            <url/>
+            <url_target/>
+        </sys_documentation>
+    </sys_documentation>
+</record_update>

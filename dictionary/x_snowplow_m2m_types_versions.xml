@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<database>
+    <element label="M2M Types Versions" max_length="40" name="x_snowplow_m2m_types_versions" type="collection">
+        <element label="Type" max_length="32" name="type" reference="x_snowplow_type" type="reference"/>
+        <element choice="3" display="true" label="Usage" mandatory="true" max_length="40" name="usage" type="integer">
+            <choice>
+                <element label="Provides" value="0"/>
+                <element label="Refers To" value="1"/>
+            </choice>
+        </element>
+        <element label="Version" max_length="32" name="version" reference="x_snowplow_version" type="reference"/>
+        <index name="index">
+            <element name="type"/>
+        </index>
+        <index name="index2">
+            <element name="version"/>
+        </index>
+    </element>
+</database>

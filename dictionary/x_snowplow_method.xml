@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<database>
+    <element label="Method" max_length="40" name="x_snowplow_method" type="collection">
+        <element display="true" label="Name" mandatory="true" max_length="250" name="name" type="string"/>
+        <element label="Type" mandatory="true" max_length="32" name="type" reference="x_snowplow_type" type="reference"/>
+        <index name="index">
+            <element name="type"/>
+        </index>
+    </element>
+</database>

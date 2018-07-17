@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_snowplow.Snowplow</api_name>
+        <client_callable>false</client_callable>
+        <description/>
+        <name>Snowplow</name>
+        <script><![CDATA[var Snowplow = Class.create();
+Snowplow.prototype = {
+	initialize: function() {
+	},
+	
+	processDependencies: function(/*XML string*/ xml) {
+		var doc = new XMLDocument2();
+		doc.parseXML(xml);
+		var root = doc.getDocumentElement();
+		var modules = root.getChildNodeIterator();
+		while(modules.hasNext()) {
+			var mod = modules.next();
+			if(mod.getNodeName() == "module"){
+				var moduleRecord = this.ensureModule(mod.getAttribute("name"));
+				var versionRecord = this.ensureVersion(moduleRecord, mod.getAttribute("version"));
+				
+				var types = mod.getChildNodeIterator();
+				while(types.hasNext()) {
+					var type = types.next();
+					if(type.getNodeName() == "type"){
+						var typeRecord = this.ensureType(type.getAttribute("name"));
+						this.ensureTypeVersion(typeRecord, versionRecord, this.getUsage(type));
+						
+						var methodsIt = type.getChildNodeIterator();
+						while(methodsIt.hasNext()) {
+							var methods = methodsIt.next();
+							if(methods.getNodeName() == "methods"){
+								var methodUsage = this.getUsage(methods);
+								var methodsText = methods.getChildNodeIterator();
+								while(methodsText.hasNext()){
+									var methodNames = methodsText.next().getTextContent().split("\n");
+									
+									for(var i = 0; i < methodNames.length; i++) {
+										var methodName = methodNames[i].trim();
+										if( methodName != "" ){
+											var methodRecord = this.ensureMethod(typeRecord,methodName);
+											this.ensureMethodVersion(methodRecord, versionRecord, methodUsage);
+										}
+										
+									}
+								}
+							}
+						}}
+					}
+				}
+			}
+		},
+		
+		
+		/* GlideRecord */ ensureModule: function(/*String*/ name) {
+			var gr = new GlideRecord("x_snowplow_module");
+			gr.addQuery("name", name);
+			gr.query();
+			if(gr.hasNext())
+				gr.next();
+			else {
+				gr.name = name;
+				gr.insert();
+			}
+			return gr;
+		},
+		
+		/* GlideRecord */ ensureVersion: function(/*GlideRecord*/ moduleRecord, /*String*/ version) {
+			var gr = new GlideRecord("x_snowplow_version");
+			gr.addQuery("module", moduleRecord.sys_id + "");
+			gr.addQuery("version", version);
+			gr.query();
+			if(gr.hasNext())
+				gr.next();
+			else {
+				gr.setValue("module",  moduleRecord.sys_id + "");
+				gr.setValue("version",  version);
+				gr.insert();
+			}
+			return gr;
+		},
+		
+		// Get usage choice value from type or method node
+		/* choice */ getUsage: function(/*XMLNode*/ node) {
+			if(node.hasAttribute("provides"))
+				return 2;
+			if(node.hasAttribute("refers_to"))
+				return 0;
+			return -1; // unexpected
+		},
+		
+		/* GlideRecord */ ensureType: function(/*String*/ name) {
+			var gr = new GlideRecord("x_snowplow_type");
+			gr.addQuery("name", name);
+			gr.query();
+			if(gr.hasNext())
+				gr.next();
+			else {
+				gr.name = name;
+				gr.insert();
+			}
+			return gr;
+		},
+		
+		/* GlideRecord */ ensureTypeVersion: function(/*GlideRecord*/ type, /*GlideRecord*/ version, /*choice*/ usage) {
+			var gr = new GlideRecord("x_snowplow_m2m_types_versions");
+			gr.addQuery("type", type.getUniqueValue());
+			gr.addQuery("version", version.getUniqueValue());
+			gr.query();
+			if(gr.hasNext()) {
+				gr.next();
+				gr.usage = usage;
+				gr.update();
+			}
+			else {
+				gr.type = type.getUniqueValue();
+				gr.version = version.getUniqueValue();
+				gr.usage = usage;
+				gr.insert();
+			}
+			return gr;
+		},
+		
+		/* GlideRecord */ ensureMethod: function(/*GlideRecord*/ type, /*String*/ name) {
+			var gr = new GlideRecord("x_snowplow_method");
+			gr.addQuery("type", type.getUniqueValue());
+			gr.addQuery("name", name);
+			gr.query();
+			if(gr.hasNext())
+				gr.next();
+			else {
+				gr.type = type.getUniqueValue();
+				gr.name = name;
+				gr.insert();
+			}
+			return gr;
+		},
+		
+		/* GlideRecord */ ensureMethodVersion: function(/*GlideRecord*/ method, /*GlideRecord*/ version, /*choice*/ usage) {
+			var gr = new GlideRecord("x_snowplow_m2m_methods_versions");
+			gr.addQuery("method", method.getUniqueValue());
+			gr.addQuery("version", version.getUniqueValue());
+			gr.query();
+			if(gr.hasNext()) {
+				gr.next();
+				gr.usage = Math.max(usage, gr.usage);
+				gr.update();
+			}
+			else {
+				gr.method = method.getUniqueValue();
+				gr.version = version.getUniqueValue();
+				gr.usage = usage;
+				gr.insert();
+			}
+			return gr;
+		},
+		
+		type: 'Snowplow'
+	};]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>vincent.seguin</sys_created_by>
+        <sys_created_on>2018-07-13 20:07:02</sys_created_on>
+        <sys_id>d518d299db9fd300f91d6583ca961925</sys_id>
+        <sys_mod_count>21</sys_mod_count>
+        <sys_name>Snowplow</sys_name>
+        <sys_package display_value="snowplow" source="x_snowplow">afa47a0bdb031300f91d6583ca9619aa</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="snowplow">afa47a0bdb031300f91d6583ca9619aa</sys_scope>
+        <sys_update_name>sys_script_include_d518d299db9fd300f91d6583ca961925</sys_update_name>
+        <sys_updated_by>vincent.seguin</sys_updated_by>
+        <sys_updated_on>2018-07-17 20:59:08</sys_updated_on>
+    </sys_script_include>
+</record_update>

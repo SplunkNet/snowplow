@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update sys_domain="global" table="sys_script">
+    <sys_script action="INSERT_OR_UPDATE">
+        <abort_action>false</abort_action>
+        <access>package_private</access>
+        <action_delete>false</action_delete>
+        <action_insert>true</action_insert>
+        <action_query>false</action_query>
+        <action_update>false</action_update>
+        <active>true</active>
+        <add_message>false</add_message>
+        <advanced>true</advanced>
+        <change_fields>false</change_fields>
+        <client_callable>false</client_callable>
+        <collection>ecc_queue</collection>
+        <condition/>
+        <description/>
+        <execute_function>false</execute_function>
+        <filter_condition table="ecc_queue">topic=snowplow^queue=input^state=ready^EQ<item endquery="false" field="topic" goto="false" newquery="false" operator="=" or="false" value="snowplow"/>
+            <item endquery="false" field="queue" goto="false" newquery="false" operator="=" or="false" value="input"/>
+            <item endquery="false" field="state" goto="false" newquery="false" operator="=" or="false" value="ready"/>
+            <item endquery="true" field="" goto="false" newquery="false" operator="=" or="false" value=""/>
+        </filter_condition>
+        <is_rest>false</is_rest>
+        <message/>
+        <name>Snowplow Dependencies Processing</name>
+        <order>100</order>
+        <priority>100</priority>
+        <rest_method/>
+        <rest_method_text/>
+        <rest_service/>
+        <rest_service_text/>
+        <rest_variables/>
+        <role_conditions/>
+        <script><![CDATA[//TODO: move to async
+(function executeRule(current, previous /*null when async*/) {
+	current.state = "processing";
+	current.update();
+
+	new Snowplow().processDependencies(current.payload + "");
+	
+	current.state = "processed";
+	current.update();
+	return current;
+})(current, previous);]]></script>
+        <sys_class_name>sys_script</sys_class_name>
+        <sys_created_by>vincent.seguin</sys_created_by>
+        <sys_created_on>2018-07-13 20:02:35</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>04b65659db9fd300f91d6583ca96193b</sys_id>
+        <sys_mod_count>17</sys_mod_count>
+        <sys_name>Snowplow Dependencies Processing</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="snowplow" source="x_snowplow">afa47a0bdb031300f91d6583ca9619aa</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="snowplow">afa47a0bdb031300f91d6583ca9619aa</sys_scope>
+        <sys_update_name>sys_script_04b65659db9fd300f91d6583ca96193b</sys_update_name>
+        <sys_updated_by>vincent.seguin</sys_updated_by>
+        <sys_updated_on>2018-07-17 19:42:24</sys_updated_on>
+        <template/>
+        <when>after</when>
+    </sys_script>
+    <sys_translated_text action="delete_multiple" query="documentkey=04b65659db9fd300f91d6583ca96193b"/>
+</record_update>

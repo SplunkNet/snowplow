@@ -2,7 +2,12 @@
 <database>
     <element label="M2M Methods Versions" max_length="40" name="x_snowplow_m2m_methods_versions" type="collection">
         <element label="Method" max_length="32" name="method" reference="x_snowplow_method" type="reference"/>
-        <element label="Usage" max_length="40" name="usage" type="integer"/>
+        <element choice="3" label="Usage" max_length="40" name="usage" type="integer">
+            <choice>
+                <element label="Provides" value="2"/>
+                <element label="Refers To" value="0"/>
+            </choice>
+        </element>
         <element choice="3" label="Version" mandatory="true" max_length="32" name="version" reference="x_snowplow_version" type="reference">
             <choice>
                 <element label="Provides" value="0"/>

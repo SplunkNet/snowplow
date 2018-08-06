@@ -12,9 +12,7 @@ Snowplow.prototype = {
 	initialize: function() {
 	},
 	
-	processDependencies: function(/*XML string*/ xml) {
-		var doc = new XMLDocument2();
-		doc.parseXML(xml);
+	processDependencies: function(/*XMLDocument2*/ doc) {
 		var root = doc.getDocumentElement();
 		var modules = root.getChildNodeIterator();
 		while(modules.hasNext()) {
@@ -165,13 +163,13 @@ Snowplow.prototype = {
         <sys_created_by>vincent.seguin</sys_created_by>
         <sys_created_on>2018-07-13 20:07:02</sys_created_on>
         <sys_id>d518d299db9fd300f91d6583ca961925</sys_id>
-        <sys_mod_count>21</sys_mod_count>
+        <sys_mod_count>22</sys_mod_count>
         <sys_name>Snowplow</sys_name>
         <sys_package display_value="snowplow" source="x_snowplow">afa47a0bdb031300f91d6583ca9619aa</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="snowplow">afa47a0bdb031300f91d6583ca9619aa</sys_scope>
         <sys_update_name>sys_script_include_d518d299db9fd300f91d6583ca961925</sys_update_name>
         <sys_updated_by>vincent.seguin</sys_updated_by>
-        <sys_updated_on>2018-07-17 20:59:08</sys_updated_on>
+        <sys_updated_on>2018-07-17 21:26:58</sys_updated_on>
     </sys_script_include>
 </record_update>

@@ -39,15 +39,15 @@
 	gs.info("snowplow processing..." + current.sys_id);
 
 	var payload = current.payload + '';
-	var doc;
 	if (payload == "<see_attachment/>") {
-		var sa = new ScopedGlideSysAttachment();
-		doc = sa.readXMLDocument(current.getUniqueValue());
-	} else {
-		doc = new XMLDocument2();
-		doc.parseXML(payload);
+		var attachments = new GlideSysAttachment();
+		var agr = attachments.getAttachments(current.getTableName(), current.sys_id + '');
+		agr.next(); // should be only one
+		payload = attachments.getContent(agr);
 	}
-	
+
+	var doc = new XMLDocument2();
+	doc.parseXML(payload);
 	new Snowplow().processDependencies(doc);
 	
 	current.state = "processed";
@@ -60,7 +60,7 @@
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>04b65659db9fd300f91d6583ca96193b</sys_id>
-        <sys_mod_count>25</sys_mod_count>
+        <sys_mod_count>27</sys_mod_count>
         <sys_name>Snowplow Dependencies Processing</sys_name>
         <sys_overrides/>
         <sys_package display_value="snowplow" source="x_snowplow">afa47a0bdb031300f91d6583ca9619aa</sys_package>
@@ -68,7 +68,7 @@
         <sys_scope display_value="snowplow">afa47a0bdb031300f91d6583ca9619aa</sys_scope>
         <sys_update_name>sys_script_04b65659db9fd300f91d6583ca96193b</sys_update_name>
         <sys_updated_by>vincent.seguin</sys_updated_by>
-        <sys_updated_on>2018-08-06 16:48:44</sys_updated_on>
+        <sys_updated_on>2018-08-06 20:32:19</sys_updated_on>
         <template/>
         <when>after</when>
     </sys_script>

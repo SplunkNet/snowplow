@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <database>
-    <element label="M2M Methods Versions" max_length="40" name="x_snowplow_m2m_methods_versions" type="collection">
+    <element label="M2M Methods Versions" max_length="40" name="x_snowplow_m2m_methods_versions" sizeclass="106712" type="collection">
         <element label="Method" max_length="32" name="method" reference="x_snowplow_method" type="reference"/>
         <element choice="3" label="Usage" max_length="40" name="usage" type="integer">
             <choice>

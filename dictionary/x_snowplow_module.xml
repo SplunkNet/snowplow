@@ -2,5 +2,9 @@
 <database>
     <element label="Module" max_length="40" name="x_snowplow_module" type="collection">
         <element display="true" label="Name" mandatory="true" max_length="250" name="name" type="string"/>
+        <element label="Repository" max_length="32" name="repository" reference="x_snowplow_repository" type="reference"/>
+        <index name="index">
+            <element name="repository"/>
+        </index>
     </element>
 </database>

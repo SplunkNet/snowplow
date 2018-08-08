@@ -3,11 +3,9 @@
     <element label="Type" max_length="40" name="x_snowplow_type" sizeclass="14416" type="collection">
         <element display="true" label="Name" mandatory="true" max_length="250" name="name" type="string"/>
         <element label="Namespace" max_length="40" name="namespace" type="string"/>
+        <element default="javascript:current.name.replace(/((.*)\/)?(\w+$)/, &quot;$2&quot;);" label="Package" max_length="250" name="package" type="string"/>
         <element label="Provided by" max_length="32" name="provided_by" reference="x_snowplow_module" type="reference"/>
         <index name="index">
-            <element name="name"/>
-        </index>
-        <index name="index2">
             <element name="provided_by"/>
         </index>
     </element>
